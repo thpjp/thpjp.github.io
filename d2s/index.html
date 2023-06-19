@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="width=device-width, initial-scale=1">
     <meta name="description" content="LoFTR can extract high-quality semi-dense matches even in indistinctive regions with low-textures, motion blur, or repetitive patterns. Accepted in CVPR 2021."/>
-    <title>LoFTR: Detector-Free Local Feature Matching with Transformers</title>
+    <title>D2S: Descriptors to Scene Coordinates</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
@@ -70,15 +70,24 @@
               TL;DR: LoFTR can extract high-quality semi-dense matches even in indistinctive regions with low-textures, motion blur, or repetitive patterns.
             </h6>
               <br>
-            <video id="demo" width="75%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="">
+            <video id="demo" width="100%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="">
                   <source src="images/loftr-homepage-demo.mp4" type="video/mp4">
             </video>
             <div><b style="color:#fd5638; font-size:large" id="demo-warning"></b>
               <br>
               <br>
           <p class="text-justify">
-            We present a novel method for local image feature matching.  Instead of performing image feature detection, description, and matching sequentially,  we propose to first establish pixel-wise dense matches at a coarse level and later refine the good matches at a fine level. In contrast to dense methods that use cost volume to search correspondences,  we use self and cross attention layers in Transformers to obtain feature descriptors that are conditioned on both images. The global receptive field provided by Transformers enables our method to produce dense matches in low-texture areas,  where feature detectors usually struggle to produce repeatable interest points. The experiments on indoor and outdoor datasets show that LoFTR outperforms state-of-the-art methods by a large margin.  
-            LoFTR also ranks first on two public benchmarks of visual localization among the published methods.
+            State-of-the-art visual localization methods mostly rely on complex matching procedures between local descriptors and 3D
+points cloud models. However, these procedures can be costly in terms of inference, storage, and updates over time. In this work, we
+propose a direct learning-based approach that represents local descriptors and their scene coordinates by a simple network named
+D2S. Our proposed method is both simple and cost-effective. It takes only a single RGB image to localize at the test time and requires
+only 22MB of memory to encode a complex sparse scene. The proposed D2S employs a combination of a simple loss function and
+graph attention to selectively focus on robust descriptors while disregarding areas such as clouds, trees, and many dynamic objects.
+This enables D2S to effectively perform a binary-semantic classification for sparse descriptors. Additionally, we propose a new outdoor
+dataset for verification of the visual localization methods on the capacity of scene generalizing and self-updating from unlabeled
+observations, which is a special mode of the proposed D2S. Our D2S surpasses the performance of the state-of-the-art CNN-based
+method in scene coordinate regression both indoors and outdoors. It exhibits the ability to generalize beyond training data, including
+transitioning from day to night and adapting to domain shifts even in the absence of the training source.
           </p>
         </div>
       </div>
