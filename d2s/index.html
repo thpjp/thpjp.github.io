@@ -67,7 +67,7 @@
           <h3>Abstract</h3>
             <hr style="margin-top:0px">
             <h6 style="color:#8899a5" class="text-center"> 
-              TL;DR: LoFTR can extract high-quality semi-dense matches even in indistinctive regions with low-textures, motion blur, or repetitive patterns.
+              D2S can predict reliability descriptors and their 3D coordinates for high accuracy re-localization.
             </h6>
               <br>
             <video id="demo" width="100%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="">
@@ -95,30 +95,16 @@ transitioning from day to night and adapting to domain shifts even in the absenc
   </section>
   <br>
 
-  <!-- demo video -->
-  <!-- <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-12 text-center">
-            <h3>Matches on ScanNet-756</h3>
-            <hr style="margin-top:0px">
-            <video width="100%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="scannet_vid">
-              <source src="images/loftr_scene0756_00_slow.mp4" type="video/mp4">
-            </video>
-        </div>
-      </div>
-    </div>
-  </section>
-  <br>   -->
 
   <!-- overview video -->
+  <!-- 
   <section>
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
             <h3>Overview video (5 min)</h3>
             <hr style="margin-top:0px">
-            <div class="embed-responsive embed-responsive-16by9"> -->
+            <div class="embed-responsive embed-responsive-16by9">
                 <iframe style="clip-path: inset(1px 1px)" width="100%" height="100%" src="https://www.youtube.com/embed/ep015Dda0T0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
             </div>
         </div>
@@ -126,7 +112,7 @@ transitioning from day to night and adapting to domain shifts even in the absenc
     </div>
   </section>
   <br>
-
+  -->
 
   <!-- pipeline -->
   <section>
@@ -138,7 +124,7 @@ transitioning from day to night and adapting to domain shifts even in the absenc
             <!-- <div class="embed-responsive embed-responsive-16by9"> -->
                 <!-- <iframe style="clip-path: inset(1px 1px)" width="100%" height="100%" src="https://www.youtube.com/embed/EpmnpwwaR14" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe> -->
             <!-- </div> -->
-                <img class="img-fluid" src="images/loftr-arch.png" alt="LoFTR Architechture">
+                <img class="img-fluid" width="65%" src="images/pipeline.svg" alt="LoFTR Architechture">
             <hr>
             <p class="text-justify">
               LoFTR has four components:
@@ -169,13 +155,14 @@ transitioning from day to night and adapting to domain shifts even in the absenc
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
-            <h3>Matches on a low-texture area</h3>
+            <h3>Results on GreatCourt Cambridge - 8000$m^{2}$</h3>
             <!-- <h3>Matches on </h3> -->
             <p class="text-left"> 
-              Data is captured using an iPhone, color indicates the match confidence.</p>
+              Left: Predicted 3D cloud map. Red camera poses are ground truth, and blue ones are estimated; Right: Reliability prediction results, where blue dots are the good features to localize.</p>
+
           <hr style="margin-top:0px">
-            <video width="100%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="inspect_vid">
-              <source src="images/loftr-matches-compare.mp4" type="video/mp4">
+            <video width="70%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="inspect_vid">
+              <source src="images/greatcourt_seq1.mp4" type="video/mp4">
             </video>
         </div>
       </div>
@@ -197,36 +184,15 @@ transitioning from day to night and adapting to domain shifts even in the absenc
   </section>
   <br>  
 
-  <!-- compare -->
-  <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-12 text-center">
-            <h3>Qualitative comparison with <a href="https://psarlin.com/superglue">SuperGlue</a></h3>
-            <hr style="margin-top:0px">
-            <p class="text-justify">
-              Data is captured using an iPhone, color indicates the match confidence.
-            </p>
-            <video width="100%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="compare_vid">
-              <source src="images/loftr_spg_compare.mp4" type="video/mp4">
-            </video>
-            <!-- <div class="embed-responsive embed-responsive-16by9"> -->
-                <!-- <iframe style="clip-path: inset(1px 1px)" width="100%" height="100%" src="https://www.youtube.com/embed/EpmnpwwaR14" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe> -->
-            <!-- </div> -->
-        </div>
-      </div>
-    </div>
-  </section>
-  <br>
 
   <!-- feature visualization -->
   <section>
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
-            <h3>Visualizations on the attention weights and the transformed features in LoFTR</h3>
+            <h3>Visualizations on the attention weights in different graph layers</h3>
             <hr style="margin-top:0px">
-            <img class="img-fluid" src="images/feature-vis.png" alt="Feature Visualization">
+            <img class="img-fluid" src="images/attention_full.svg" alt="Feature Visualization">
             <hr style="margin-top:0px">
             <p class="text-justify">
               We use PCA to reduce the dimension of the transformed features and visualize the results with RGB color.
@@ -265,18 +231,20 @@ transitioning from day to night and adapting to domain shifts even in the absenc
           <h3>Citation</h3>
           <hr style="margin-top:0px">
               <pre style="background-color: #e9eeef;padding: 1.25em 1.5em">
-<code>@article{sun2021loftr,
-  title={{LoFTR}: Detector-Free Local Feature Matching with Transformers},
-  author={Sun, Jiaming and Shen, Zehong and Wang, Yuang and Bao, Hujun and Zhou, Xiaowei},
-  journal={CVPR},
-  year={2021}
+<code>@article{bui2023d2s,
+  title={Representing Local Descriptors and Global Scene Coordinates as D2S for Camera Relocalization},
+  author={Bach-Thuan Bui, Dinh-Tuan Tran, Joo-Ho Lee},
+  journal={},
+  year={2023}
 }</code></pre>
           <hr>
       </div>
     </div>
   </div>
 
+  
   <!-- ack -->
+  <!--
   <div class="container">
     <div class="row ">
       <div class="col-12">
@@ -291,8 +259,10 @@ transitioning from day to night and adapting to domain shifts even in the absenc
       </div>
     </div>
   </div>
+  -->
 
   <!-- rec -->
+  <!--
   <div class="container">
     <div class="row ">
       <div class="col-12">
@@ -304,6 +274,7 @@ transitioning from day to night and adapting to domain shifts even in the absenc
       </div>
     </div>
   </div>
+  -->
 
   <footer class="text-center" style="margin-bottom:10px; font-size: medium;">
       <hr>
