@@ -127,22 +127,7 @@ transitioning from day to night and adapting to domain shifts even in the absenc
                 <img class="img-fluid" width="65%" src="images/pipeline.svg" alt="LoFTR Architechture">
             <hr>
             <p class="text-justify">
-              LoFTR has four components:
-              \(\textbf{1.}\) A local feature CNN extracts
-              the coarse-level feature maps 
-              $\tilde{F}^A$ and $\tilde{F}^B$,
-              together with the fine-level feature maps 
-              $\hat{F}^A$ and $\hat{F}^B$
-              from the image pair $I^A$ and $I^B$.
-              \(\textbf{2.}\)  The coarse feature maps are flattened to 1-D vectors and added with the
-              positional encoding.
-              The added features are then processed by the Local Feature TRansformer (LoFTR) module, which has $N_c$ self-attention and cross-attention layers.
-              \(\textbf{3.}\) A differentiable matching layer is used to match the transformed features, which ends up with a confidence matrix $\mathcal{P}_c$. 
-              The matches in $\mathcal{P}_c$ are selected according to the confidence threshold and mutual-nearest-neighbor criteria, 
-              yielding the coarse-level match prediction $\mathcal{M}_c$.
-              \(\textbf{4.}\) For every selected coarse prediction $(\tilde{i}, \tilde{j}) \in \mathcal{M}_c$,
-              a local window with size $w\times w$ is cropped from the fine-level feature map.
-              Coarse matches will be refined within this local window to a sub-pixel level as the final match prediction $\mathcal{M}_f$.
+              Given a set of images $\{\mathbf{I}^{i}_{\mathcal{T}}\}_{i=1}^{n}$ and its reconstructed SfM model $\mathcal{E}$,  we aim to develop a sparse regression module, which can encode entire environment $\mathcal{E}$ by a compact function $\mathfrak{F}(.)$, where $\mathfrak{F}$ is the prorposed D2S neural network as above. The proposed function $\mathfrak{F}(.)$ inputs local  descriptors $\mathbf{D}^{i} \in \mathbb{R}^{K \times D}$ extracted from $\mathbf{I}^{i}$ and outputs their corresponding 3D coordinates $\mathbf{W}^{i} \in \mathbb{R}^{K \times 4}$ (an additional dimension for reliability detection). The ultimate goal of the proposed module is to perform <i>visual re-localization</i>, a task of estimating camera pose $\mathbf{T} \in \mathbb{R}^{4\times4}$ of the query image $\mathbf{I}_{q}$.
             </p>
         </div>
       </div>
@@ -158,7 +143,7 @@ transitioning from day to night and adapting to domain shifts even in the absenc
             <h3>Results on GreatCourt Cambridge - 8000$m^{2}$</h3>
             <!-- <h3>Matches on </h3> -->
             <p class="text-left"> 
-              Left: Predicted 3D cloud map. Red camera poses are ground truth, and blue ones are estimated; Right: Reliability prediction results, where blue dots are the good features to localize.</p>
+              Left: Predicted 3D cloud map, where the camera poses with red color are ground truth while blue ones are estimated by D2S; Right: Reliability prediction results, where blue dots are the good features to localize.</p>
 
           <hr style="margin-top:0px">
             <video width="70%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="inspect_vid">
@@ -192,15 +177,11 @@ transitioning from day to night and adapting to domain shifts even in the absenc
         <div class="col-12 text-center">
             <h3>Visualizations on the attention weights in different graph layers</h3>
             <hr style="margin-top:0px">
-            <img class="img-fluid" src="images/attention_full.svg" alt="Feature Visualization">
+            <img class="img-fluid"  src="images/attention_full.svg" alt="Feature Visualization">
             <hr style="margin-top:0px">
             <p class="text-justify">
-              We use PCA to reduce the dimension of the transformed features and visualize the results with RGB color.
-              The visualization for attention weights demonstrate that the features in indistinctive or low-texture regions are able to aggregate local and global context information through self-attention and cross-attention.
-              In the first two examples, the query point from the low-texture region is able to aggregate the surrounding global information flexibly. 
-              For instance, the point on the chair is looking at the edge of the chair. 
-              In the last two examples, the query point from the distinctive region can also utilize the richer information from other regions.
-              The feature visualization with PCA further shows that LoFTR learns a position-dependent feature representation.
+              We visualize the attention weights as the blue rays for three attention layers of 1, 3, and 5. We retain only attention weights within the threshold of $\alpha_{ij} > 5\times10^{-4}$.
+              The visualization for attention weights demonstrates that the D2S has successfully learned to focus on distinctive or reliable regions using 5 graph layers. This then results in the capability of predicting robust features and their 3D coordinates. 
             </p>
         </div>
       </div>
