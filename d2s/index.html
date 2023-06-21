@@ -143,7 +143,7 @@ transitioning from day to night and adapting to domain shifts even in the absenc
             <h3>Results on GreatCourt Cambridge - 8000$m^{2}$ - median error: 38cm, 0.18$^{\circ}$</h3>
             <!-- <h3>Matches on </h3> -->
             <p class="text-left"> 
-              On the left is a predicted 3D cloud map. The camera poses in red represent the ground truth, while the blue ones are estimated by D2S. On the right are the reliability prediction results. The blue dots indicate good features for localization.</p>
+              On the left is the predicted 3D cloud maps. The camera poses in red represent the ground truth, while the blue ones are estimated by D2S. On the right are the reliability prediction results. The blue dots indicate good features for localization.</p>
 
           <hr style="margin-top:0px">
             <video width="70%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="inspect_vid">
@@ -343,8 +343,8 @@ transitioning from day to night and adapting to domain shifts even in the absenc
       timeout = setTimeout(function () {
         var demoWarning = document.getElementById("demo-warning");
         var giteeLink = document.createElement("a");
-        giteeLink.innerText = "mirror hosted in mainland China";
-        giteeLink.href = "https://project-pages-1255496016.cos-website.ap-shanghai.myqcloud.com/loftr/";
+        // giteeLink.innerText = "mirror hosted in mainland China";
+        // giteeLink.href = "https://project-pages-1255496016.cos-website.ap-shanghai.myqcloud.com/loftr/";
         // var bilibiliLink = document.createElement("a");
         // var youtubeLink = document.createElement("a");
         // bilibiliLink.innerText = "BiliBili";
@@ -352,7 +352,7 @@ transitioning from day to night and adapting to domain shifts even in the absenc
         // youtubeLink.innerText = "YouTube";
         // youtubeLink.href = "";
 
-        demoWarning.append("Loading the videos took too long, you can optionally visit this site in the ", giteeLink, ".");
+        demoWarning.append("Loading the videos took too long, please try again ", giteeLink, ".");
         // demoWarning.append("Loading the video took too long, you can optionally watch it on Bilibili", bilibiliLink, " or YouTube", youtubeLink, ".");
         clearTimeout(timeout);
         timeout = undefined;
