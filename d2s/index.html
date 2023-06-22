@@ -255,6 +255,30 @@ transitioning from day to night and adapting to domain shifts even in the absenc
   </section>
   <br>
 
+
+  <!-- Comparison with DSAC* -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            <h3>Results on BKC WestWing & comparison with <a href="https://ieeexplore.ieee.org/abstract/document/9394752">DSAC*</a> </h3>
+            <hr style="margin-top:0px">
+            <img width="85%" class="img-fluid"  src="images/BKC_results.svg" alt="Comparison">
+            <hr style="margin-top:0px">
+            <p class="text-justify">
+              We show the median errors obtained by DSAC* and D2S on the BKC WestWing dataset. The errors are shown in meters/degrees/accuracy (threshold of 0.5m & 10$^{\circ}$). D2S+ is the proposed self-supervised updating version with unlabeled data.
+            </p>
+            <video id="demo" width="60%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="">
+                  <source src="images/BKC_westwing.mp4" type="video/mp4">
+            </video>
+            <p class="text-justify">
+              Visualization of estimated camera poses: The green poses are estimated by DSAC*, the blue ones are the results of our D2S+, while the red poses are the ground truths. We also visualize the 3D cloud model predicted by D2S+.
+            </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
   <!-- more videos -->
   <!-- <section>
     <div class="container">
@@ -270,6 +294,7 @@ transitioning from day to night and adapting to domain shifts even in the absenc
     </div>
   </section>
   <br> -->
+
 
   <!-- citing -->
   <div class="container">
