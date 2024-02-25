@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="width=device-width, initial-scale=1">
+    <meta name="description" content=""/>
+    <title>D2S: Descriptors to Scene Coordinates</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <style>
+      body {
+        background: #FFFFFF no-repeat fixed top left;
+        font-family:'Open Sans', sans-serif;
+      }
+    </style>
+
+  </head>
+
+  <!-- cover -->
+  <section>
+    <div class="jumbotron text-center mt-0">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h2>Representing 3D sparse map points and lines for camera relocalization</h2>
+
+            <hr>
+            <h6> <a href="https://thuanbb.github.io/" target="_blank">Bach-Thuan Bui</a>, 
+                <a href="https://sites.google.com/view/tuantd" target="_blank">Huy-Hoang Bui</a>, 
+                 <a href="https://sites.google.com/view/tuantd" target="_blank">Dinh-Tuan Tran</a>, 
+                 <a href="https://research-db.ritsumei.ac.jp/rithp/k03/resid/S000220;jsessionid=8CC0520A8C7C1F3D502596F0A07D64B0?lang=en" target="_blank">Joo-Ho Lee</a></h6>
+            <p> AIS Lab, Ritsumeikan University &nbsp;&nbsp; 
+            </p>
+            <!-- <p> <a class="btn btn-secondary btn-lg" href="" role="button">Paper</a> 
+                <a class="btn btn-secondary btn-lg" href="" role="button">Code</a> 
+                <a class="btn btn-secondary btn-lg" href="" role="button">Data</a> </p> -->
+
+            <div class="row justify-content-center">
+              <div class="column">
+                  <p class="mb-5"><a class="btn btn-large btn-light" href="https://arxiv.org/pdf/2307.15250.pdf" role="button"  target="_blank">
+                    <i class="fa fa-file"></i> Paper</a> </p>
+              </div>
+              <div class="column">
+                  <p class="mb-5"><a class="btn btn-large btn-light" id="code_soon" href="https://github.com/ais-lab/feat2map" role="button" 
+                    target="_blank" disabled=1>
+                <i class="fa fa-github-alt"></i> Code </a> </p>
+              </div>
+              <div class="column">
+                  <p class="mb-5"><a class="btn btn-large btn-light" href="https://drive.google.com/file/d/1XEdnrFTzThruG15pW2A_1jYAxtpYbwq5/view?usp=sharing" role="button"  target="_blank">
+                    <i class="fa fa-file"></i>BKC Dataset</a> </p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- abstract -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h3>Abstract</h3>
+            <hr style="margin-top:0px">
+            <h6 style="color:#8899a5" class="text-center"> 
+              D2S can predict reliability descriptors and their 3D coordinates for high accuracy re-localization.
+            </h6>
+              <br>
+            <video width="70%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="inspect_vid">
+                  <source src="images/video1.mp4" type="video/mp4">
+            </video>
+            <div><b style="color:#fd5638; font-size:large" id="demo-warning"></b>
+              <br>
+              <br>
+          <p class="text-justify">
+            Recent advancements in visual localization and mapping have demonstrated considerable success by integrating both point and line features. However, expanding the localization framework to include additional mapping components frequently results in increased demands for memory and computational resources dedicated to matching tasks. In this work, we show how such a lightweight neural network can learn to represent both 3D point and line features, and then exhibit leading pose accuracy by harnessing the power of multiple learned mappings. In detail, we utilize a single transformer block to encode line features, effectively transforming them into distinctive point-like descriptors. Subsequently, we treat these point and line descriptor sets as distinct yet interconnected feature sets. Through the integration of self and cross-attention within several graph layers, our method effectively refines each feature before regressing 3D maps by two simple MLPs. In comprehensive experiments, our indoor localization findings surpass those of Hloc and Limap across both point-based and line-assisted configurations. Moreover, in outdoor scenarios, our method secures a significant lead, marking the most considerable enhancement over state-of-the-art learning-based methodologies.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+
+
+  <!-- overview video -->
+  <!-- 
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            <h3>Overview video (5 min)</h3>
+            <hr style="margin-top:0px">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe style="clip-path: inset(1px 1px)" width="100%" height="100%" src="https://www.youtube.com/embed/ep015Dda0T0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+  -->
+
+  <!-- pipeline -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            <h3>Pipeline overview</h3>
+            <hr style="margin-top:0px">
+            <!-- <div class="embed-responsive embed-responsive-16by9"> -->
+                <!-- <iframe style="clip-path: inset(1px 1px)" width="100%" height="100%" src="https://www.youtube.com/embed/EpmnpwwaR14" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe> -->
+            <!-- </div> -->
+                <img class="img-fluid" width="65%" src="images/pipeline.svg" alt="LoFTR Architechture">
+            <hr>
+            <p class="text-justify">
+              Given a set of images $\{\mathbf{I}^{i}_{\mathcal{T}}\}_{i=1}^{n}$ and its reconstructed SfM model $\mathcal{E}$,  we aim to develop a sparse regression module, which can encode entire environment $\mathcal{E}$ by a compact function $\mathfrak{F}(.)$, where $\mathfrak{F}$ is the prorposed D2S neural network as above. The proposed function $\mathfrak{F}(.)$ inputs local  descriptors $\mathbf{D}^{i} \in \mathbb{R}^{K \times D}$ extracted from $\mathbf{I}^{i}$ and outputs their corresponding 3D coordinates $\mathbf{W}^{i} \in \mathbb{R}^{K \times 4}$ (an additional dimension for reliability detection). The ultimate goal of the proposed module is to perform <i>visual re-localization</i>, a task of estimating camera pose $\mathbf{T} \in \mathbb{R}^{4\times4}$ of the query image $\mathbf{I}_{q}$.
+            </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+
+  <!-- demo video -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            <h3>Results on GreatCourt Cambridge - 8000$m^{2}$ - median error: 38cm, 0.18$^{\circ}$</h3>
+            <!-- <h3>Matches on </h3> -->
+            <p class="text-left"> 
+              On the left are the predicted 3D cloud maps. The camera poses red represent the ground truth, while the blue ones are estimated by D2S. On the right are the reliability prediction results. The green dots indicate good features for localization.</p>
+
+          <hr style="margin-top:0px">
+            <video width="70%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="inspect_vid">
+              <source src="images/greatcourt_seq1.mp4" type="video/mp4">
+            </video>
+        </div>
+      </div>
+      <br>
+      <div class="row justify-content-center">
+        <div class="column">
+            <p class="mb-5"><a class="btn btn-large btn-light" role="button"  onclick="changePlaybackSpeed(0.125)"
+              target="_blank" disabled=1>
+          <i class="fa "></i> <span style="color:#ffffff;">0.5x speed</span></a> </p>
+        </div>
+        <div class="column">
+            <p class="mb-5"><a class="btn btn-large btn-light" role="button" onclick="changePlaybackSpeed(0.5)"
+              target="_blank" disabled=1>
+          <i class="fa fa-github-alt"></i> <span style="color:#ffffff;">2x speed</span></a> </p>
+        </div>
+        <br>
+        <br>
+    </div>
+  </section>
+  <br>  
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            <h3>Results on 7scenes Chess - 6$m^{3}$ - median error: 1.7cm, 0.57$^{\circ}$</h3>
+            <!-- <h3>Matches on </h3> -->
+            <p class="text-left"> </p>
+
+          <hr style="margin-top:0px">
+            <video width="70%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="inspect_vid">
+              <source src="images/chess_seq3.mp4" type="video/mp4">
+            </video>
+        </div>
+      </div>
+      <br>
+      <div class="row justify-content-center">
+        <div class="column">
+            <p class="mb-5"><a class="btn btn-large btn-light" role="button"  onclick="changePlaybackSpeed(0.125)"
+              target="_blank" disabled=1>
+          <i class="fa "></i> <span style="color:#ffffff;">0.5x speed</span></a> </p>
+        </div>
+        <div class="column">
+            <p class="mb-5"><a class="btn btn-large btn-light" role="button" onclick="changePlaybackSpeed(0.5)"
+              target="_blank" disabled=1>
+          <i class="fa fa-github-alt"></i> <span style="color:#ffffff;">2x speed</span></a> </p>
+        </div>
+        <br>
+        <br>
+    </div>
+  </section>
+  <br>  
+
+
+<section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            <h3>Results on Indoor6 scene1 - 140$m^{3}$ - median error: 5.6cm, 0.9$^{\circ}$</h3>
+            <!-- <h3>Matches on </h3> -->
+            <p class="text-left"> </p>
+
+          <hr style="margin-top:0px">
+            <video width="70%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="inspect_vid">
+              <source src="images/indoor6_scene1.mp4" type="video/mp4">
+            </video>
+        </div>
+      </div>
+      <br>
+      <div class="row justify-content-center">
+        <div class="column">
+            <p class="mb-5"><a class="btn btn-large btn-light" role="button"  onclick="changePlaybackSpeed(0.125)"
+              target="_blank" disabled=1>
+          <i class="fa "></i> <span style="color:#ffffff;">0.5x speed</span></a> </p>
+        </div>
+        <div class="column">
+            <p class="mb-5"><a class="btn btn-large btn-light" role="button" onclick="changePlaybackSpeed(0.5)"
+              target="_blank" disabled=1>
+          <i class="fa fa-github-alt"></i> <span style="color:#ffffff;">2x speed</span></a> </p>
+        </div>
+        <br>
+        <br>
+    </div>
+  </section>
+  <br>
+
+
+
+
+  <!-- Comparison with DSAC* -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            <h3>Results on BKC WestWing & comparison with <a href="https://ieeexplore.ieee.org/abstract/document/9394752">DSAC*</a> </h3>
+            <hr style="margin-top:0px">
+            <img width="85%" class="img-fluid"  src="images/BKC_results.svg" alt="Comparison">
+            
+            <p class="text-justify">
+              We show the median errors obtained by DSAC* and D2S on the BKC WestWing dataset. The errors are shown in meters/degrees/accuracy (threshold of 0.5m & 10$^{\circ}$). D2S+ is the proposed self-supervised updating version with unlabeled data.
+            </p>
+            <!-- <hr style="margin-top:0px"> -->
+            <video id="demo" width="60%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="">
+                  <source src="images/BKC_westwing.mp4" type="video/mp4">
+            </video>
+            <p class="text-justify">
+              Visualization of estimated camera poses (Seq-3): The green poses are estimated by DSAC*, the blue ones are the results of our D2S+, while the red poses are the ground truths. We also visualize the 3D cloud model predicted by D2S+.
+            </p>
+            <!-- <hr style="margin-top:0px"> -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+  <!-- more videos -->
+  <!-- <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            <h3>More matching results</h3>
+            <hr style="margin-top:0px">
+            <video width="100%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="">
+                <source src="images/street_dance.m4v" type="video/mp4">
+            </video>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br> -->
+
+
+
+<!-- feature visualization -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            <h3>Visualizations on the attention weights in different graph layers</h3>
+            <hr style="margin-top:0px">
+            <img class="img-fluid"  src="images/attention_full.svg" alt="Feature Visualization">
+            <!-- <hr style="margin-top:0px"> -->
+            <p class="text-justify">
+              We visualize the attention weights as the blue rays for three attention layers of 1, 3, and 5. We retain only attention weights within the threshold of $\alpha_{ij} > 5\times10^{-4}$.
+              The visualization for attention weights demonstrates that the D2S has successfully learned to focus on distinctive or reliable regions using 5 graph layers. This then results in the capability of predicting robust features and their 3D coordinates. 
+            </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+
+
+
+  <!-- citing -->
+  <div class="container">
+    <div class="row ">
+      <div class="col-12">
+          <h3>Citation</h3>
+          <hr style="margin-top:0px">
+              <pre style="background-color: #e9eeef;padding: 1.25em 1.5em">
+<code>@article{bui2023d2s,
+  title={D2S: Representing local descriptors and global scene coordinates for camera relocalization},
+  author={Bui, Bach-Thuan and Tran, Dinh-Tuan and Lee, Joo-Ho},
+  journal={arXiv preprint arXiv:2307.15250},
+  year={2023}
+}</code></pre>
+          <hr>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- ack -->
+  <!--
+  <div class="container">
+    <div class="row ">
+      <div class="col-12">
+          <h3>Acknowledgements</h3>
+          <hr style="margin-top:0px">
+          <p class="text-justify">
+            We would like to specially thank Reviewer 1 for the insightful and constructive comments. 
+            We provide additional responses to Reviewer 1 regarding the naming of this paper in the supplementary material.
+            We would like to thank Sida Peng and Qi Fang for the proof-reading, and Hongcheng Zhao for generating the visualizations.
+          </p>
+          <hr>
+      </div>
+    </div>
+  </div>
+  -->
+
+  <!-- rec -->
+  <!--
+  <div class="container">
+    <div class="row ">
+      <div class="col-12">
+          <h3>Recommendations to other works from our group</h3>
+          <hr style="margin-top:0px">
+          <p class="text-justify">
+            Welcome to checkout our work on real-time 3D reconstruction (<a href="http://zju3dv.github.io/neuralrecon/">NeuralRecon</a>) and human reconstruction (<a href="http://zju3dv.github.io/neuralbody">NeuralBody</a> and <a href="http://zju3dv.github.io/Mirrored-Human">Mirrored-Human</a>) in CVPR 2021.
+          </p>
+      </div>
+    </div>
+  </div>
+  -->
+
+  <footer class="text-center" style="margin-bottom:10px; font-size: medium;">
+      <hr>
+      Thanks to <a href="https://lioryariv.github.io/" target="_blank">Lior Yariv</a> for the <a href="https://lioryariv.github.io/idr/" target="_blank">website template</a>.
+  </footer>
+
+  <script type="text/javascript">
+    function changePlaybackSpeed(speed)
+        {
+            document.getElementById('inspect_vid').playbackRate = speed;
+        }
+        changePlaybackSpeed(0.25)
+
+    var demo = document.getElementById("demo");
+    var startTime;
+    var timeout = undefined;
+    demo.addEventListener("loadstart", function() {
+      startTime = Date.now();
+      timeout = setTimeout(function () {
+        var demoWarning = document.getElementById("demo-warning");
+        var giteeLink = document.createElement("a");
+        // giteeLink.innerText = "mirror hosted in mainland China";
+        // giteeLink.href = "https://project-pages-1255496016.cos-website.ap-shanghai.myqcloud.com/loftr/";
+        // var bilibiliLink = document.createElement("a");
+        // var youtubeLink = document.createElement("a");
+        // bilibiliLink.innerText = "BiliBili";
+        // bilibiliLink.href = "";
+        // youtubeLink.innerText = "YouTube";
+        // youtubeLink.href = "";
+
+        demoWarning.append("Loading the videos took too long, please try again ", giteeLink, ".");
+        // demoWarning.append("Loading the video took too long, you can optionally watch it on Bilibili", bilibiliLink, " or YouTube", youtubeLink, ".");
+        clearTimeout(timeout);
+        timeout = undefined;
+      }, 6000);
+    });
+    demo.addEventListener("loadeddata", function() {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = undefined;
+      }
+    });
+//     var source = document.createElement("source");
+//     source.setAttribute("src", "images/loftr-homepage-demo.mp4");
+//     source.setAttribute("type", "video/webm");
+//     demo.appendChild(source);
+  </script>
+  <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</body>
+</html>
