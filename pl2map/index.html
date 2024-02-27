@@ -127,7 +127,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
-            <h3>Results on GreatCourt Cambridge - 8000$m^{2}$ - median error: 38cm, 0.18$^{\circ}$</h3>
+            <h3>Results on KingsCollege Cambridge$ - median error: 38cm, 0.18$^{\circ}$</h3>
             <!-- <h3>Matches on </h3> -->
             <p class="text-left"> 
               On the left are the predicted 3D cloud maps. The camera poses red represent the ground truth, while the blue ones are estimated by D2S. On the right are the reliability prediction results. The green dots indicate good features for localization.</p>
@@ -139,116 +139,10 @@
         </div>
       </div>
       <br>
-      <div class="row justify-content-center">
-        <div class="column">
-            <p class="mb-5"><a class="btn btn-large btn-light" role="button"  onclick="changePlaybackSpeed(0.125)"
-              target="_blank" disabled=1>
-          <i class="fa "></i> <span style="color:#ffffff;">0.5x speed</span></a> </p>
-        </div>
-        <div class="column">
-            <p class="mb-5"><a class="btn btn-large btn-light" role="button" onclick="changePlaybackSpeed(0.5)"
-              target="_blank" disabled=1>
-          <i class="fa fa-github-alt"></i> <span style="color:#ffffff;">2x speed</span></a> </p>
-        </div>
-        <br>
-        <br>
     </div>
   </section>
   <br>  
 
-  <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-12 text-center">
-            <h3>Results on 7scenes Chess - 6$m^{3}$ - median error: 1.7cm, 0.57$^{\circ}$</h3>
-            <!-- <h3>Matches on </h3> -->
-            <p class="text-left"> </p>
-
-          <hr style="margin-top:0px">
-            <video width="70%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="inspect_vid">
-              <source src="images/chess_seq3.mp4" type="video/mp4">
-            </video>
-        </div>
-      </div>
-      <br>
-      <div class="row justify-content-center">
-        <div class="column">
-            <p class="mb-5"><a class="btn btn-large btn-light" role="button"  onclick="changePlaybackSpeed(0.125)"
-              target="_blank" disabled=1>
-          <i class="fa "></i> <span style="color:#ffffff;">0.5x speed</span></a> </p>
-        </div>
-        <div class="column">
-            <p class="mb-5"><a class="btn btn-large btn-light" role="button" onclick="changePlaybackSpeed(0.5)"
-              target="_blank" disabled=1>
-          <i class="fa fa-github-alt"></i> <span style="color:#ffffff;">2x speed</span></a> </p>
-        </div>
-        <br>
-        <br>
-    </div>
-  </section>
-  <br>  
-
-
-<section>
-    <div class="container">
-      <div class="row">
-        <div class="col-12 text-center">
-            <h3>Results on Indoor6 scene1 - 140$m^{3}$ - median error: 5.6cm, 0.9$^{\circ}$</h3>
-            <!-- <h3>Matches on </h3> -->
-            <p class="text-left"> </p>
-
-          <hr style="margin-top:0px">
-            <video width="70%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="" controls="" id="inspect_vid">
-              <source src="images/indoor6_scene1.mp4" type="video/mp4">
-            </video>
-        </div>
-      </div>
-      <br>
-      <div class="row justify-content-center">
-        <div class="column">
-            <p class="mb-5"><a class="btn btn-large btn-light" role="button"  onclick="changePlaybackSpeed(0.125)"
-              target="_blank" disabled=1>
-          <i class="fa "></i> <span style="color:#ffffff;">0.5x speed</span></a> </p>
-        </div>
-        <div class="column">
-            <p class="mb-5"><a class="btn btn-large btn-light" role="button" onclick="changePlaybackSpeed(0.5)"
-              target="_blank" disabled=1>
-          <i class="fa fa-github-alt"></i> <span style="color:#ffffff;">2x speed</span></a> </p>
-        </div>
-        <br>
-        <br>
-    </div>
-  </section>
-  <br>
-
-
-
-
-  <!-- Comparison with DSAC* -->
-  <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-12 text-center">
-            <h3>Results on BKC WestWing & comparison with <a href="https://ieeexplore.ieee.org/abstract/document/9394752">DSAC*</a> </h3>
-            <hr style="margin-top:0px">
-            <img width="85%" class="img-fluid"  src="images/BKC_results.svg" alt="Comparison">
-            
-            <p class="text-justify">
-              We show the median errors obtained by DSAC* and D2S on the BKC WestWing dataset. The errors are shown in meters/degrees/accuracy (threshold of 0.5m & 10$^{\circ}$). D2S+ is the proposed self-supervised updating version with unlabeled data.
-            </p>
-            <!-- <hr style="margin-top:0px"> -->
-            <video id="demo" width="60%" playsinline="" autoplay="autoplay" loop="loop" preload="" muted="">
-                  <source src="images/BKC_westwing.mp4" type="video/mp4">
-            </video>
-            <p class="text-justify">
-              Visualization of estimated camera poses (Seq-3): The green poses are estimated by DSAC*, the blue ones are the results of our D2S+, while the red poses are the ground truths. We also visualize the 3D cloud model predicted by D2S+.
-            </p>
-            <!-- <hr style="margin-top:0px"> -->
-        </div>
-      </div>
-    </div>
-  </section>
-  <br>
   <!-- more videos -->
   <!-- <section>
     <div class="container">
